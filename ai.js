@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const OpenAI = require('openai');
 
 const openai = new OpenAI({
@@ -7,10 +8,11 @@ const openai = new OpenAI({
 });
 
 async function generateAIResponse(userInput) {
+  const fileContent = fs.readFileSync('./samplechat.txt', 'utf-8');
   const prompt = `
     You are an AI assistant for a professional property agent based in Singapore.
     Your role is to assist potential clients with quick, clear, and accurate responses about real estate matters in Singapore.
-    I've provided the sample conversation file ${/__dirname}/samplechat.txt} for reference.
+    
     You must provide polite, informative, and clear answers. When a user asks for a viewing or appointment, collect the following details to create a Google Calendar meeting:
     - Full name
     - Email address (for sending Google Meet invite)  
@@ -31,7 +33,8 @@ async function generateAIResponse(userInput) {
 
     Key behavioral guidelines:
     - Be polite, professional, and helpful at all times.
-    - Use a friendly and professional tone of Steve Htet from the provided file.
+    - Use a friendly and professional tone.
+    - Use the content of the file ${fileContent} to answer questions.
     - If you’re unsure about a fee or detail, respond with: “Thanks for your question! I’ll pass this along to the agent and get back to you shortly.”
     - Keep responses short but informative.
     - Never give legal or financial advice; just provide general information.
