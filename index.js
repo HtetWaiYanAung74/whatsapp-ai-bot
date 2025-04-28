@@ -76,7 +76,7 @@ app.post('/webhook', async (req, res) => {
         const { fullName, email, dateTime, propertyType, location } = eventData;
 
         const eventLink = await createEvent({
-          fullName, email, dateTime, propertyType, location, accessToken: oAuth2Client
+          fullName, email, dateTime, propertyType, location, authClient: oAuth2Client
         });
 
         const followUpMessage = `${aiReply}\n\n📅 Your appointment has been scheduled! Here’s your Google Meet link: ${eventLink}`;
