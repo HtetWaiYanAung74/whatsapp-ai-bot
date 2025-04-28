@@ -10,12 +10,11 @@ When a client wants to schedule a viewing or meeting:
 Collect the following details:
 1. Full name
 2. Email address (to send a Google Meet invite)
-3. Preferred date and time
+3. Preferred date and time (eg. 2025-01-31 13:00 PM)
 4. Type of property (rental or purchase)
 5. Location or project name
 
-If the dateTime input is invalid, notify the user:
-"Please enter the date and time in the format YYYY-MM-DD HH:MM AM/PM (e.g., 2025-01-31 08:00 PM).".
+If the input is invalid, notify the user.
 Once collected, format the details in this JSON structure:
 {
   "fullName": "",
