@@ -1,9 +1,11 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
 const express = require('express');
+const { google } = require('googleapis');
 const { generateAIResponse } = require('./ai');
 const { createEvent } = require('./calendar');
 const { sendWhatsAppMessage } = require('./whatsapp');
 
+dotenv.config();
 const app = express();
 app.use(express.json());
 const usersTokens = {};
