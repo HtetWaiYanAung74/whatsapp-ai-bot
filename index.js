@@ -40,23 +40,9 @@ app.post('/webhook', async (req, res) => {
 
         // Validate required fields
         const { fullName, email, dateTime, propertyType, location } = eventData;
-        let start = new Date(dateTime);
-        if (isNaN(start.getTime())) {
-          start = parseISO(dateTime);
-          if (!isValid(start)) throw new Error("Invalid dateTime format");
-        }
-
-        const end = new Date(start.getTime() + 30 * 60 * 1000);
-
-        const summary = `Property Viewing with ${fullName}`;
-        const description = `Client is interested in a ${propertyType} at ${location}.`;
 
         const eventLink = await createEvent({
-          summary,
-          description,
-          startTime: start.toISOString(),
-          endTime: end.toISOString(),
-          email,
+          fullName, email, dateTime, propertyType, location
         });
 
         const followUpMessage = `${aiReply}\n\n📅 Your appointment has been scheduled! Here’s your Google Meet link: ${eventLink}`;
