@@ -56,6 +56,7 @@ async function createEvent({ fullName, email, dateTime, propertyType, location, 
 
   const response = await calendar.events.insert({
     calendarId: 'primary',
+    auth: authClient,
     resource: event,
     conferenceDataVersion: 1,
     sendUpdates: 'all',
