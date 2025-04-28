@@ -19,8 +19,8 @@ const calendar = google.calendar({ version: 'v3', auth });
 
 async function createEvent({ fullName, email, dateTime, propertyType, location }) {
 
-  const startTime = moment(dateTime).tz('Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
-  const endTime = moment(startTime).add(30, 'minutes').toISOString();
+  const startTime = moment(dateTime, 'DD MMM YYYY HH:mm', 'Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
+  const endTime = moment(startTime).add(30, 'm').format('YYYY-MM-DDTHH:mm:ssZ');
 
   const event = {
     summary: `Property Viewing: ${propertyType}`,
@@ -44,6 +44,8 @@ async function createEvent({ fullName, email, dateTime, propertyType, location }
       },
     },
   };
+
+  console.log('Creating event:', event);	
 
   const response = await calendar.events.insert({
     calendarId: 'primary',
