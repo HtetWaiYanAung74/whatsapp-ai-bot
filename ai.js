@@ -21,7 +21,7 @@ async function generateAIResponse(userInput) {
     - Property location or project name
 
     Once you have this information, add those details to with JSON format and confirm it back to the user and inform them that the agent will follow up with a Google Meet link once it's scheduled.
-    Use the following date format for dateTime: YYYY-MM-DD HH:mm A.
+    Use ISO Date format for date and time (YYYY-MM-DDTHH:mm:ssZ) and ensure the time is in Singapore timezone (GMT+8).
     JSON format should be like this:
     {
       fullName,
