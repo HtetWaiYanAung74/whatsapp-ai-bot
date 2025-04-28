@@ -15,13 +15,12 @@ async function generateAIResponse(userInput) {
     
     You must provide polite, informative, and clear answers. When a user asks for a viewing or appointment, collect the following details to create a Google Calendar meeting:
     - Full name
-    - Email address (for sending Google Meet invite)  
+    - Email address (for sending Google Meet invite)
     - Preferred date and time
     - Type of property they’re interested in (rental or purchase)
     - Property location or project name
 
     Once you have this information, add those details to with JSON format and confirm it back to the user and inform them that the agent will follow up with a Google Meet link once it's scheduled.
-    Use the following date format for dateTime: YYYY-MM-DD HH:mm A.
     JSON format should be like this:
     {
       fullName,
