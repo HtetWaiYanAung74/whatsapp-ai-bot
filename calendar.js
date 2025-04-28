@@ -1,9 +1,9 @@
 const { google } = require('googleapis');
 const moment = require('moment-timezone');
-const path = require('path');
 const { v4: uuid } = require('uuid');
 
 /* use of JWT for Google Calendar API start */
+// const path = require('path');
 // const SERVICE_ACCOUNT_FILE = path.join(__dirname, 'my-service-account.json');
 // const CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL;
 // const PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
@@ -17,7 +17,10 @@ const { v4: uuid } = require('uuid');
 // });
 /* use of JWT for Google Calendar API end */
 
-async function createEvent({ fullName, email, dateTime, propertyType, location, auth }) {
+async function createEvent({ fullName, email, dateTime, propertyType, location, accessToken }) {
+
+  const auth = new google.auth.OAuth2();
+  auth.setCredentials({ access_token: accessToken });
 
   const calendar = google.calendar({ version: 'v3', auth });
   
@@ -36,7 +39,12 @@ async function createEvent({ fullName, email, dateTime, propertyType, location, 
       dateTime: endTime,
       timeZone: 'Asia/Singapore'
     },
-    attendees: [{ email }],
+    attendees: [{
+      email: [
+        process.env.GOOGLE_CALENDAR_EMAIL,
+        email,
+      ]
+    }],
     reminders: {
       useDefault: true,
     },
