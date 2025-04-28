@@ -36,12 +36,10 @@ async function createEvent({ fullName, email, dateTime, propertyType, location, 
       dateTime: endTime,
       timeZone: 'Asia/Singapore'
     },
-    attendees: [{
-      email: [
-        process.env.GOOGLE_CALENDAR_EMAIL,
-        email,
-      ]
-    }],
+    attendees: [
+      { email: process.env.GOOGLE_CALENDAR_EMAIL },
+      { email: email }
+    ],
     reminders: {
       useDefault: true,
     },
