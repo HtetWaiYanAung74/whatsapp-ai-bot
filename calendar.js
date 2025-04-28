@@ -3,22 +3,24 @@ const moment = require('moment-timezone');
 const path = require('path');
 const { v4: uuid } = require('uuid');
 
+/* use of JWT for Google Calendar API start */
 // const SERVICE_ACCOUNT_FILE = path.join(__dirname, 'my-service-account.json');
-const CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL;
-const PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
-const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+// const CLIENT_EMAIL = process.env.GOOGLE_CLIENT_EMAIL;
+// const PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+// const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 
-const auth = new google.auth.JWT({
-  // keyFile: path.join(__dirname, 'my-service-account.json'),
-  email: CLIENT_EMAIL,
-  key: PRIVATE_KEY,
-  scopes: SCOPES,
-});
+// const auth = new google.auth.JWT({
+//   // keyFile: path.join(__dirname, 'my-service-account.json'),
+//   email: CLIENT_EMAIL,
+//   key: PRIVATE_KEY,
+//   scopes: SCOPES,
+// });
+/* use of JWT for Google Calendar API end */
 
-const calendar = google.calendar({ version: 'v3', auth });
+async function createEvent({ fullName, email, dateTime, propertyType, location, auth }) {
 
-async function createEvent({ fullName, email, dateTime, propertyType, location }) {
-
+  const calendar = google.calendar({ version: 'v3', auth });
+  
   const startTime = moment(dateTime, 'YYYY-MM-DD HH:mm A', 'Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
   const endTime = moment(startTime).add(30, 'm').format('YYYY-MM-DDTHH:mm:ssZ');
 

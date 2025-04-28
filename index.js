@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { generateAIResponse } = require('./ai');
+const { getAuthenticatedClient, usersTokens } = require('./auth');
 const { createEvent } = require('./calendar');
 const { sendWhatsAppMessage } = require('./whatsapp');
 
@@ -41,8 +42,12 @@ app.post('/webhook', async (req, res) => {
         // Validate required fields
         const { fullName, email, dateTime, propertyType, location } = eventData;
 
+        const userId = 'user-id-007';
+        const auth = await getAuthenticatedClient(userId);
+        console.log('Authenticated client: ', auth);
+
         const eventLink = await createEvent({
-          fullName, email, dateTime, propertyType, location
+          fullName, email, dateTime, propertyType, location, auth
         });
 
         const followUpMessage = `${aiReply}\n\n📅 Your appointment has been scheduled! Here’s your Google Meet link: ${eventLink}`;
