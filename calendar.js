@@ -17,12 +17,9 @@ const { v4: uuid } = require('uuid');
 // });
 /* use of JWT for Google Calendar API end */
 
-async function createEvent({ fullName, email, dateTime, propertyType, location, accessToken }) {
+async function createEvent({ fullName, email, dateTime, propertyType, location, authClient}) {
 
-  const auth = new google.auth.OAuth2();
-  auth.setCredentials({ access_token: accessToken });
-
-  const calendar = google.calendar({ version: 'v3', auth });
+  const calendar = google.calendar({ version: 'v3', auth: authClient });
   
   const startTime = moment(dateTime, 'YYYY-MM-DD HH:mm A', 'Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
   const endTime = moment(startTime).add(30, 'm').format('YYYY-MM-DDTHH:mm:ssZ');

@@ -8,7 +8,6 @@ const { sendWhatsAppMessage } = require('./whatsapp');
 dotenv.config();
 const app = express();
 app.use(express.json());
-const usersTokens = {};
 
 const oAuth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
@@ -31,9 +30,13 @@ app.get('/auth/callback', async (req, res) => {
   const code = req.query.code;
 
   const { tokens } = await oAuth2Client.getToken(code);
-  const userId = 'google-user-007'; // you should associate tokens to real user id
-
-  usersTokens[userId] = tokens; // Save tokens in-memory (later DB)
+  oAuth2Client.setCredentials({
+    access_token: tokens.access_token,  
+    refresh_token: tokens.refresh_token,
+    expires_in: tokens.expires_in,
+    scope: tokens.scope,
+    token_type: tokens.token_type,
+  });
 
   res.send('Authentication successful! You can now schedule your appointments.');
 });
@@ -67,13 +70,13 @@ app.post('/webhook', async (req, res) => {
     if (jsonMatch) {
       try {
         const eventData = JSON.parse(jsonMatch[1].trim());
-        console.log(eventData);
+        console.log(eventData, oAuth2Client);
 
         // Validate required fields
         const { fullName, email, dateTime, propertyType, location } = eventData;
 
         const eventLink = await createEvent({
-          fullName, email, dateTime, propertyType, location, accessToken: usersTokens[userId].access_token
+          fullName, email, dateTime, propertyType, location, accessToken: oAuth2Client
         });
 
         const followUpMessage = `${aiReply}\n\n📅 Your appointment has been scheduled! Here’s your Google Meet link: ${eventLink}`;
