@@ -19,7 +19,7 @@ const calendar = google.calendar({ version: 'v3', auth });
 
 async function createEvent({ fullName, email, dateTime, propertyType, location }) {
 
-  const startTime = moment(dateTime, 'DD MMM YYYY HH:mm', 'Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
+  const startTime = moment(dateTime, 'YYYY-MM-DD HH:mm A', 'Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
   const endTime = moment(startTime).add(30, 'm').format('YYYY-MM-DDTHH:mm:ssZ');
 
   const event = {
