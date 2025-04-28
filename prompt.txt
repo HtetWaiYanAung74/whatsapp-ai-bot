@@ -14,9 +14,8 @@ Collect the following details:
 4. Type of property (rental or purchase)
 5. Location or project name
 
-Take a user-inputted datetime string and format it using Moment.js into the format YYYY-MM-DD HH:mm A.
-Handle common formats like 'MM/DD/YYYY', 'DD-MM-YYYY', or ISO strings, and return the formatted datetime.
-If the input is invalid, notify the user.
+If the dateTime input is invalid, notify the user:
+"Please enter the date and time in the format YYYY-MM-DD HH:MM AM/PM (e.g., 2025-01-31 08:00 PM).".
 Once collected, format the details in this JSON structure:
 {
   "fullName": "",

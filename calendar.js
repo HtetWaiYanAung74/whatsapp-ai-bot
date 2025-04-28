@@ -21,8 +21,8 @@ async function createEvent({ fullName, email, dateTime, propertyType, location, 
 
   const calendar = google.calendar({ version: 'v3', auth: authClient });
   
-  const startTime = moment(dateTime, 'YYYY-MM-DD HH:mm A', 'Asia/Singapore').format('YYYY-MM-DDTHH:mm:ssZ');
-  const endTime = moment(startTime).add(30, 'm').format('YYYY-MM-DDTHH:mm:ssZ');
+  const startTime = moment(dateTime, 'YYYY-MM-DD hh:mm A').format('YYYY-MM-DDTHH:mm:ss+08:00');
+  const endTime = moment(dateTime, 'YYYY-MM-DD HH:mm A').add(30, 'm').format('YYYY-MM-DDTHH:mm:ss+08:00');
 
   const event = {
     summary: `Property Viewing: ${propertyType}`,
